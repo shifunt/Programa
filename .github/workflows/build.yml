@@ -1,0 +1,44 @@
+name: Build Linux y Windows
+
+on: [push]
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.0'
+          modules: 'qtsql'
+      - name: Compilar
+        run: |
+          qmake -config release
+          make -j4
+      - name: Subir ejecutable
+        uses: actions/upload-artifact@v3
+        with:
+          name: SeguridadGolden-Linux
+          path: SeguridadGolden
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalar Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.0'
+          modules: 'qtsql'
+      - name: Compilar
+        run: |
+          qmake -config release
+          nmake
+      - name: Empaquetar DLLs
+        run: windeployqt release\SeguridadGolden.exe
+      - name: Subir ejecutable
+        uses: actions/upload-artifact@v3
+        with:
+          name: SeguridadGolden-Windows
+          path: release\
