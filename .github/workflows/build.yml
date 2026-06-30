@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - name: Instalar Qt
@@ -15,11 +15,21 @@ jobs:
         run: |
           qmake -config release
           make -j4
+      - name: Descargar linuxdeployqt
+        run: |
+          wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
+          chmod +x linuxdeployqt-continuous-x86_64.AppImage
+      - name: Empaquetar AppImage
+        run: |
+          export QML_SOURCES_PATHS=.
+          ./linuxdeployqt-continuous-x86_64.AppImage SeguridadGolden -appimage -no-translations
+        env:
+          QMAKE: ${{ env.Qt6_DIR }}/bin/qmake
       - name: Subir ejecutable
         uses: actions/upload-artifact@v4
         with:
           name: SeguridadGolden-Linux
-          path: SeguridadGolden
+          path: '*.AppImage'
 
   windows:
     runs-on: windows-latest
@@ -41,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SeguridadGolden-Windows
-          path: release\ 
+          path: release\
