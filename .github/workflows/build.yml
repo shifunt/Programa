@@ -14,7 +14,7 @@ jobs:
       - name: Instalar dependencias del sistema
         run: |
           sudo apt-get update
-          sudo apt-get install -y libxcb-cursor0 libxcb-cursor-dev
+          sudo apt-get install -y libxcb-cursor0 libxcb-cursor-dev imagemagick
       - name: Compilar
         run: |
           qmake -config release
@@ -24,12 +24,16 @@ jobs:
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlmimer.so"
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlodbc.so"
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlpsql.so"
+      - name: Crear icono simple
+        run: |
+          convert -size 256x256 xc:#1b5e20 SeguridadGolden.png
       - name: Crear archivo .desktop
         run: |
           cat > SeguridadGolden.desktop << 'DESKTOP_EOF'
           [Desktop Entry]
           Type=Application
           Name=SeguridadGolden
+          Comment=Sistema de Control de Seguridad
           Exec=SeguridadGolden
           Icon=SeguridadGolden
           Categories=Utility;
