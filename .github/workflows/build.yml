@@ -11,6 +11,10 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.7.3'
+      - name: Instalar dependencias del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxcb-cursor0 libxcb-cursor-dev
       - name: Compilar
         run: |
           qmake -config release
