@@ -24,6 +24,16 @@ jobs:
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlmimer.so"
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlodbc.so"
           rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlpsql.so"
+      - name: Crear archivo .desktop
+        run: |
+          cat > SeguridadGolden.desktop << 'DESKTOP_EOF'
+          [Desktop Entry]
+          Type=Application
+          Name=SeguridadGolden
+          Exec=SeguridadGolden
+          Icon=SeguridadGolden
+          Categories=Utility;
+          DESKTOP_EOF
       - name: Descargar linuxdeployqt
         run: |
           wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
@@ -31,7 +41,7 @@ jobs:
       - name: Empaquetar AppImage
         run: |
           export QML_SOURCES_PATHS=.
-          ./linuxdeployqt-continuous-x86_64.AppImage SeguridadGolden -appimage -no-translations
+          ./linuxdeployqt-continuous-x86_64.AppImage SeguridadGolden.desktop -appimage -no-translations
         env:
           QMAKE: ${{ env.Qt6_DIR }}/bin/qmake
       - name: Subir ejecutable
