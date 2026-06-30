@@ -11,7 +11,6 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.0'
-          modules: 'qtsql'
       - name: Compilar
         run: |
           qmake -config release
@@ -30,7 +29,6 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.0'
-          modules: 'qtsql'
       - name: Compilar
         run: |
           qmake -config release
