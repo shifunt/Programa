@@ -19,6 +19,11 @@ jobs:
         run: |
           qmake -config release
           make -j4
+      - name: Eliminar drivers SQL no usados
+        run: |
+          rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlmimer.so"
+          rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlodbc.so"
+          rm -f "${{ env.Qt6_DIR }}/plugins/sqldrivers/libqsqlpsql.so"
       - name: Descargar linuxdeployqt
         run: |
           wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
