@@ -17,7 +17,7 @@ jobs:
           qmake -config release
           make -j4
       - name: Subir ejecutable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SeguridadGolden-Linux
           path: SeguridadGolden
@@ -38,7 +38,7 @@ jobs:
       - name: Empaquetar DLLs
         run: windeployqt release\SeguridadGolden.exe
       - name: Subir ejecutable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SeguridadGolden-Windows
           path: release\
